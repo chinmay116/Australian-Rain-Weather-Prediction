@@ -32,7 +32,7 @@ jobs:
                 gcloud auth configure-docker us-central1-docker.pkg.dev
 
             - name: Building and Pushing Image
-              run:
+              run: |
                 docker build -t $IMAGE:$GITHUB_SHA .
                 docker push $IMAGE:$GITHUB_SHA
             
