@@ -3,7 +3,7 @@ version: 2.1
 executors:
   machine-executor:
     machine:
-      - image: ubuntu-2204:current
+      image: ubuntu-2204:current
     working_directory: ~/repo
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
             curl -sSL https://sdk.cloud.google.com | bash > /dev/null
             echo 'source $HOME/google-cloud-sdk/path.bash.inc' >> $BASH_ENV
             source $BASH_ENV
-            
+
       - run:
           name: Authenticate with google cloud
           command: |
