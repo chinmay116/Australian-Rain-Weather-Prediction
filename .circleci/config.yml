@@ -63,8 +63,16 @@ jobs:
               gcloud container clusters get-credentials $GKE_CLUSTER --region $GOOGLE_COMPUTE_REGION --project $GOOGLE_PROJECT_ID
 
       - run:
+          name: Install gke-gcloud-auth-plugin
+          command: |
+            sudo apt-get update && sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
+            echo 'export USE_GKE_GCLOUD_AUTH_PLUGIN=True' >> $BASH_ENV
+            source $BASH_ENV
+
+      - run:
           name: Deploy to GKE
           command: |
+              gcloud container clusters get-credentials $GKE_CLUSTER --region $GOOGLE_COMPUTE_REGION --project $GOOGLE_PROJECT_ID
               kubectl apply -f kubernetes-deployment.yaml
 
 workflows:
