@@ -1,0 +1,106 @@
+/* Import modern Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #2e2e2e;
+}
+
+/* Container */
+.container {
+    background: #ffffff;
+    padding: 2.5rem 3rem;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    max-width: 1100px;
+    width: 95%;
+}
+
+/* Heading */
+h1 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: #222;
+    text-align: center;
+}
+
+/* Form Grid Layout */
+.prediction-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Form Group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+    color: #555;
+}
+
+input[type="text"] {
+    padding: 0.7rem 0.9rem;
+    border: 1px solid #d0d7de;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #333;
+    transition: 0.2s;
+}
+
+input[type="text"]:focus {
+    border-color: #2563eb; /* professional blue */
+    outline: none;
+    box-shadow: 0 0 4px rgba(37, 99, 235, 0.25);
+}
+
+/* Button */
+button {
+    grid-column: 1 / -1;
+    justify-self: center;
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease-in-out, transform 0.2s;
+}
+
+button:hover {
+    background: #1e40af;
+    transform: translateY(-2px);
+}
+
+/* Result Section */
+.result {
+    margin-top: 2rem;
+    background: #f0f4ff;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.result h2 {
+    font-size: 1.3rem;
+    color: #1e40af;
+}
+
+.result span {
+    font-weight: 600;
+}
