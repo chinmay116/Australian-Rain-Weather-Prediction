@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Install Google Cloud SDK
           command: |
-            curl -sSL https://sdk.cloud.google.com | bash > /dev/null
+            curl -sSL https://sdk.cloud.google.com | bash -s -- --disable-prompts > /dev/null
             echo 'source $HOME/google-cloud-sdk/path.bash.inc' >> $BASH_ENV
             source $BASH_ENV
 
