@@ -36,19 +36,13 @@ jobs:
                 docker build -t $IMAGE:$GITHUB_SHA .
                 docker push $IMAGE:$GITHUB_SHA
             
-            - name: GKE Configuration
-              run: |
-                gcloud container clusters get-credentials $GKE_CLUSTER --region $GKE_REGION --project $PROJECT_ID
-
-            - name: Install gke-gcloud-auth-plugin
-              run: |
-                sudo apt-get update
-                sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
-
-            - name: Configure kubectl to use gke-gcloud-auth-plugin
-              run: |
-                echo "export USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
-
+            - name: Get GKE credentials
+              uses: google-github-actions/get-gke-credentials@v1
+              with:
+                cluster_name: ${{ env.GKE_CLUSTER }}
+                location: ${{ env.GKE_REGION }}
+                project_id: ${{ env.PROJECT_ID }}
+                
             - name: Deploying to Kubernetes
               run: |
                 kubectl apply -f kubernetes-deployment.yaml
