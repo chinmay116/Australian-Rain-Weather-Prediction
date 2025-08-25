@@ -1,26 +1,33 @@
 version: 2.1
 
 executors:
-  docker-executor:
-    docker:
-      - image: google/cloud-sdk:latest
+  machine-executor:
+    machine:
+      - image: ubuntu-2204:current
     working_directory: ~/repo
 
 jobs:
   checkout_code:
-    executor: docker-executor
+    executor: machine-executor
     steps:
       - checkout
 
   build_docker_image:
-    executor: docker-executor
+    executor: machine-executor
     steps:
       - checkout
       - setup_remote_docker
       - run:
+          name: Install Google Cloud SDK
+          command: |
+            curl -sSL https://sdk.cloud.google.com | bash > /dev/null
+            echo 'source $HOME/google-cloud-sdk/path.bash.inc' >> $BASH_ENV
+            source $BASH_ENV
+            
+      - run:
           name: Authenticate with google cloud
           command: |
-            echo "$GCLOUD_SERVICE_KEY" > gcp-key.json
+            echo "$GCLOUD_SERVICE_KEY"  > gcp-key.json
             gcloud auth activate-service-account --key-file=gcp-key.json
             gcloud config set project $GOOGLE_PROJECT_ID
             gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
@@ -32,14 +39,14 @@ jobs:
             docker push us-central1-docker.pkg.dev/$GOOGLE_PROJECT_ID/mlops-app/mlops-app:latest
 
   deploy_to_gke:
-    executor: docker-executor
+    executor: machine-executor
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Authenticate with google cloud
           command: |
-            echo "$GCLOUD_SERVICE_KEY" > gcp-key.json
+            echo "$GCLOUD_SERVICE_KEY"  > gcp-key.json
             gcloud auth activate-service-account --key-file=gcp-key.json
             gcloud config set project $GOOGLE_PROJECT_ID
             gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
